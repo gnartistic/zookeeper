@@ -5,6 +5,11 @@ const PORT = process.env.PORT || 3001;
 // code to instantiate the server
 const app = express();
 
+// parse incoming string or array data
+app.use(express.urlencoded({ extended: true }));
+// parse incoming JSON data
+app.use(express.json());
+
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
   // Note that we save the animalsArray as filteredResults here:
@@ -47,6 +52,14 @@ function findById(id, animalsArray) {
     const result = animalsArray.filter(animal => animal.id === id)[0];
     return result;
 }
+
+function createNewAnimal(body, animalsArray) {
+    console.log(body);
+    // our function's main code will go here!
+
+    // return finished code to post route for response
+    return body;
+}
 // the get() method requires two arguments. 
 // The first is a string that describes the route the client will have to fetch from,
 // The second is a callback function that will execute every time that route is accessed with a GET request
@@ -66,6 +79,12 @@ app.get('/api/animals/:id', (req, res) => {
     } else {
         res.send(404);
     }
+});
+
+app.post('/api/animals', (req, res) => { 
+    // req.body is where our incoming content will be
+    console.log(req.body);
+    res.json(req.body);
 });
 
 // code to listen for requests
